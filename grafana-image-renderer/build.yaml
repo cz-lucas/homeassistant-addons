@@ -1,0 +1,4 @@
+---
+build_from:
+  amd64: grafana/grafana-image-renderer:latest
+  aarch64: grafana/grafana-image-renderer:latest
