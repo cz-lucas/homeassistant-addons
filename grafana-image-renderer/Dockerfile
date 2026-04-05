@@ -6,7 +6,7 @@ USER root
 
 # Install jq to parse Home Assistant options
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends jq=1.6-2.1 \
+    && apt-get install -y --no-install-recommends jq \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy run script
