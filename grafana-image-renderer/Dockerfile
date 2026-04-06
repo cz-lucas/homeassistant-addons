@@ -1,4 +1,4 @@
-ARG BUILD_FROM=grafana/grafana-image-renderer:5.7.3
+ARG BUILD_FROM=grafana/grafana-image-renderer:latest
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
