@@ -24,7 +24,7 @@ Runs the [Grafana Image Renderer](https://github.com/grafana/grafana-image-rende
 **Environment variables (Docker / HA Grafana add-on):**
 
 ```
-GF_RENDERING_SERVER_URL=http://<ha-ip>:8081/render
+GF_RENDERING_SERVER_URL=http://b2b0a286-grafana-image-renderer:8081/render
 GF_RENDERING_RENDERER_TOKEN=<What you have entered in the addon-config>
 ```
 
@@ -32,7 +32,7 @@ GF_RENDERING_RENDERER_TOKEN=<What you have entered in the addon-config>
 
 ```ini
 [rendering]
-server_url = http://<ha-ip>:8081/render
+server_url = http://b2b0a286-grafana-image-renderer:8081/render
 renderer_token = <What you have entered in the addon-config>
 ```
 
