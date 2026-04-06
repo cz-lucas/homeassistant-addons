@@ -5,11 +5,12 @@ slug: grafana_image_renderer
 description: A backend rendering service for Grafana that renders panels and dashboards as PNG images using a headless Chromium browser.
 url: https://github.com/cz-lucas/homeassistant-addons
 init: false
+video: true
 arch:
   - amd64
   - aarch64
 ports:
-  8081/tcp: 8081
+  8081/tcp: null
 ports_description:
   8081/tcp: Renderer HTTP API
 map:
