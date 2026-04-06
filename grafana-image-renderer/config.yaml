@@ -1,6 +1,6 @@
 ---
 name: Grafana Image Renderer
-version: "1.0.0"
+version: "1.1.0"
 slug: grafana_image_renderer
 description: A backend rendering service for Grafana that renders panels and dashboards as PNG images using a headless Chromium browser.
 url: https://github.com/cz-lucas/homeassistant-addons
@@ -19,7 +19,23 @@ options:
   log_level: info
   auth_token: "-"
   ignore_https_errors: false
+  browser_gpu: false
+  browser_max_height: 3000
+  browser_max_width: 3000
+  browser_min_height: 500
+  browser_min_width: 1000
+  browser_page_scale_factor: 1.0
+  browser_portrait: false
+  browser_timezone: "Etc/UTC"
 schema:
-  log_level: list(trace|debug|info|warning|error)
+  log_level: list(debug|info|warn|error)
   auth_token: str
   ignore_https_errors: bool
+  browser_gpu: bool
+  browser_max_height: int?
+  browser_max_width: int?
+  browser_min_height: int?
+  browser_min_width: int?
+  browser_page_scale_factor: float?
+  browser_portrait: bool?
+  browser_timezone: str?
