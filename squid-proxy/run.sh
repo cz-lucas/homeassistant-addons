@@ -15,9 +15,9 @@ if [ ! -f "${CONFIG_PATH}" ]; then
     cp /etc/squid/squid.conf.default "${CONFIG_PATH}"
 fi
 
-# Ensure squid cache directory is initialised
+# Ensure squid cache directory is initialized
 if [ ! -d /var/cache/squid/00 ]; then
-    bashio::log.info "Initialising Squid cache directory..."
+    bashio::log.info "Initializing Squid cache directory..."
     squid -f "${CONFIG_PATH}" -z
 fi
 
