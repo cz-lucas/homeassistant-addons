@@ -30,6 +30,7 @@ options:
   num_threads: 1
   log_verbosity: 1
   access_control_allow: "0.0.0.0/0"
+  access_control_allow_ipv6: "::/0"
   custom_records: []
 schema:
   listen_port: port
@@ -42,6 +43,7 @@ schema:
   num_threads: int
   log_verbosity: "list(0|1|2|3|4|5)"
   access_control_allow: str
+  access_control_allow_ipv6: str
   custom_records:
     - name: str
       type: str

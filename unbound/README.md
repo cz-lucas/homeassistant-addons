@@ -6,14 +6,14 @@ A validating, recursive, and caching DNS resolver for Home Assistant, based on [
 
 ## Why Unbound?
 
-Unbound is a trusted, high-performance DNS resolver that supports DNSSEC validation out of the box. It is commonly used as an upstream resolver for ad-blockers such as **AdGuard Home** or **Pi-hole**, allowing you to resolve DNS queries directly against the root servers without relying on a third-party DNS provider.
+Unbound is a trusted, high-performance DNS resolver with DNSSEC validation built in. It is designed to be used **alongside** other DNS servers such as **AdGuard Home** or **Pi-hole** — Unbound acts as the upstream resolver so those tools can keep handling ad-blocking and local filtering while Unbound resolves queries directly against the root servers, with no dependency on a third-party DNS provider.
 
-## Running alongside AdGuard Home
+## Running alongside AdGuard Home or Pi-hole
 
-This addon listens on port **5335** by default, which avoids any conflict with AdGuard Home (port 53). Configure AdGuard Home to use `127.0.0.1:5335` as its upstream DNS server, and all queries forwarded from AdGuard Home will be resolved by Unbound.
+This addon listens on port **5335** by default, which avoids any conflict with AdGuard Home or Pi-hole (port 53). Configure your DNS server to use `127.0.0.1:5335` as its upstream, and all forwarded queries will be resolved by Unbound.
 
 ```
-Clients → AdGuard Home (port 53) → Unbound (port 5335) → Root DNS servers
+Clients → AdGuard Home / Pi-hole (port 53) → Unbound (port 5335) → Root DNS servers
 ```
 
 ## Configuration
@@ -28,7 +28,8 @@ cache_min_ttl: 300         # Minimum TTL (seconds) for cached records
 cache_max_ttl: 86400       # Maximum TTL (seconds) for cached records
 num_threads: 1             # Number of worker threads
 log_verbosity: 1           # 0 = silent, 1 = operational, 2-5 = debug
-access_control_allow: "0.0.0.0/0"  # CIDR range allowed to query Unbound
+access_control_allow: "0.0.0.0/0"  # IPv4 CIDR range allowed to query Unbound
+access_control_allow_ipv6: "::/0"  # IPv6 CIDR range allowed to query Unbound
 custom_records: []         # Optional static DNS records
 ```
 
@@ -48,7 +49,7 @@ custom_records:
 
 ### Security note on `access_control_allow`
 
-The default value `0.0.0.0/0` allows all hosts to query Unbound. In a typical Home Assistant setup this is fine because the port is only exposed to the host network. Restrict this to your LAN CIDR (e.g. `192.168.1.0/24`) if you expose the port externally.
+The default values (`0.0.0.0/0` / `::/0`) allow all IPv4 and IPv6 hosts to query Unbound. In a typical Home Assistant setup this is fine because the port is only exposed to the host network. Restrict these to your LAN CIDRs (e.g. `192.168.1.0/24` / `fd00::/8`) if you expose the port externally.
 
 ## Support
 

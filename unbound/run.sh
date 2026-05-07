@@ -20,6 +20,7 @@ CACHE_MAX_TTL=$(jq -r '.cache_max_ttl // 86400' "${OPTIONS_FILE}")
 NUM_THREADS=$(jq -r '.num_threads // 1' "${OPTIONS_FILE}")
 LOG_VERBOSITY=$(jq -r '.log_verbosity // 1' "${OPTIONS_FILE}")
 ACCESS_CONTROL_ALLOW=$(jq -r '.access_control_allow // "0.0.0.0/0"' "${OPTIONS_FILE}")
+ACCESS_CONTROL_ALLOW_IPV6=$(jq -r '.access_control_allow_ipv6 // "::/0"' "${OPTIONS_FILE}")
 
 # ---------------------------------------------------------------------------
 # Fetch fresh root hints if not present or older than 30 days
@@ -51,6 +52,7 @@ sed \
     -e "s/__DO_IPV4__/${DO_IPV4}/g" \
     -e "s/__DO_IPV6__/${DO_IPV6}/g" \
     -e "s/__ACCESS_CONTROL_ALLOW__/${ACCESS_CONTROL_ALLOW}/g" \
+    -e "s/__ACCESS_CONTROL_ALLOW_IPV6__/${ACCESS_CONTROL_ALLOW_IPV6}/g" \
     -e "s/__CACHE_MIN_TTL__/${CACHE_MIN_TTL}/g" \
     -e "s/__CACHE_MAX_TTL__/${CACHE_MAX_TTL}/g" \
     -e "s/__PREFETCH__/${PREFETCH}/g" \
