@@ -1,0 +1,57 @@
+server:
+    verbosity: __LOG_VERBOSITY__
+    num-threads: __NUM_THREADS__
+    chroot: ""
+
+    # Network interfaces — listen on all IPv4 and IPv6 addresses
+    interface: 0.0.0.0
+    interface: ::
+    port: __LISTEN_PORT__
+
+    # Protocol support
+    do-ip4: __DO_IPV4__
+    do-ip6: __DO_IPV6__
+    do-udp: yes
+    do-tcp: yes
+
+    # Access control
+    access-control: 127.0.0.0/8 allow
+    access-control: ::1/128 allow
+    access-control: __ACCESS_CONTROL_ALLOW__ allow
+    access-control: __ACCESS_CONTROL_ALLOW_IPV6__ allow
+
+    # Root hints are provided by the unbound package
+    root-hints: __ROOT_HINTS_FILE__
+
+    # DNSSEC
+    auto-trust-anchor-file: __ROOT_KEY_FILE__
+
+    # Performance / caching
+    cache-min-ttl: __CACHE_MIN_TTL__
+    cache-max-ttl: __CACHE_MAX_TTL__
+    prefetch: __PREFETCH__
+    prefetch-key: yes
+    rrset-roundrobin: yes
+
+    # Hide server identity
+    hide-identity: yes
+    hide-version: yes
+
+    # Minimise QNAME (privacy)
+    qname-minimisation: yes
+
+    # Harden against DNSSEC stripped answers and cache snooping
+    harden-glue: yes
+    harden-dnssec-stripped: yes
+    harden-below-nxdomain: yes
+    harden-referral-path: yes
+
+    # Use 0x20 encoding to reduce spoofing risk
+    use-caps-for-id: yes
+
+    # Logging
+    log-queries: no
+    log-replies: no
+
+    # Custom local records placeholder
+    # __CUSTOM_RECORDS__

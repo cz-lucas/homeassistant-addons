@@ -1,0 +1,50 @@
+---
+name: Unbound DNS Resolver
+version: "1.0.0"
+slug: unbound
+description: >-
+  A validating, recursive, and caching DNS resolver with DNSSEC support.
+  Designed to run alongside other DNS servers such as AdGuard Home.
+url: https://github.com/cz-lucas/homeassistant-addons
+init: false
+arch:
+  - amd64
+  - aarch64
+  - armv7
+  - armhf
+  - i386
+ports:
+  5335/tcp: 5335
+  5335/udp: 5335
+ports_description:
+  5335/tcp: DNS over TCP
+  5335/udp: DNS over UDP
+options:
+  listen_port: 5335
+  do_ipv4: true
+  do_ipv6: true
+  dnssec: true
+  prefetch: true
+  cache_min_ttl: 300
+  cache_max_ttl: 86400
+  num_threads: 1
+  log_verbosity: 1
+  access_control_allow: "0.0.0.0/0"
+  access_control_allow_ipv6: "::/0"
+  custom_records: []
+schema:
+  listen_port: port
+  do_ipv4: bool
+  do_ipv6: bool
+  dnssec: bool
+  prefetch: bool
+  cache_min_ttl: int
+  cache_max_ttl: int
+  num_threads: int
+  log_verbosity: "list(0|1|2|3|4|5)"
+  access_control_allow: str
+  access_control_allow_ipv6: str
+  custom_records:
+    - name: str
+      type: str
+      value: str
