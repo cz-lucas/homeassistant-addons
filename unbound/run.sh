@@ -4,8 +4,13 @@ set -e
 OPTIONS_FILE="/data/options.json"
 CONF_FILE="/etc/unbound/unbound.conf"
 TMPL_FILE="/etc/unbound/unbound.conf.tmpl"
-HINTS_FILE="/etc/unbound/root.hints"
-ROOT_KEY="/etc/unbound/root.key"
+STATE_DIR="/data/unbound"
+HINTS_FILE="${STATE_DIR}/root.hints"
+ROOT_KEY="${STATE_DIR}/root.key"
+USE_ROOT_HINTS="yes"
+
+mkdir -p "${STATE_DIR}"
+chown -R unbound:unbound "${STATE_DIR}" 2>/dev/null || true
 
 # ---------------------------------------------------------------------------
 # Read options
@@ -27,8 +32,18 @@ ACCESS_CONTROL_ALLOW_IPV6=$(jq -r '.access_control_allow_ipv6 // "::/0"' "${OPTI
 # ---------------------------------------------------------------------------
 if [ ! -f "${HINTS_FILE}" ] || [ "$(find "${HINTS_FILE}" -mtime +30 2>/dev/null)" ]; then
     echo "[unbound] Downloading root hints..."
-    wget -q -O "${HINTS_FILE}" https://www.internic.net/domain/named.root || \
+    TMP_HINTS_FILE="${HINTS_FILE}.tmp"
+    if wget -q -O "${TMP_HINTS_FILE}" https://www.internic.net/domain/named.root && [ -s "${TMP_HINTS_FILE}" ]; then
+        mv -f "${TMP_HINTS_FILE}" "${HINTS_FILE}"
+    else
+        rm -f "${TMP_HINTS_FILE}"
         echo "[unbound] Warning: could not download root hints; using cached copy if present."
+    fi
+fi
+
+if [ ! -s "${HINTS_FILE}" ]; then
+    echo "[unbound] Warning: no valid root hints file available; using built-in root hints."
+    USE_ROOT_HINTS="no"
 fi
 
 # ---------------------------------------------------------------------------
@@ -56,11 +71,17 @@ sed \
     -e "s|__CACHE_MIN_TTL__|${CACHE_MIN_TTL}|g" \
     -e "s|__CACHE_MAX_TTL__|${CACHE_MAX_TTL}|g" \
     -e "s|__PREFETCH__|${PREFETCH}|g" \
+    -e "s|__ROOT_HINTS_FILE__|${HINTS_FILE}|g" \
+    -e "s|__ROOT_KEY_FILE__|${ROOT_KEY}|g" \
     "${TMPL_FILE}" > "${CONF_FILE}"
 
 # Append DNSSEC anchor line only when enabled
 if [ "${DNSSEC}" != "true" ]; then
     sed -i 's|auto-trust-anchor-file:.*||g' "${CONF_FILE}"
+fi
+
+if [ "${USE_ROOT_HINTS}" != "yes" ]; then
+    sed -i 's|root-hints:.*||g' "${CONF_FILE}"
 fi
 
 # ---------------------------------------------------------------------------
