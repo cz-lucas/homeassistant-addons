@@ -46,16 +46,16 @@ fi
 # ---------------------------------------------------------------------------
 echo "[unbound] Generating configuration..."
 sed \
-    -e "s/__LOG_VERBOSITY__/${LOG_VERBOSITY}/g" \
-    -e "s/__NUM_THREADS__/${NUM_THREADS}/g" \
-    -e "s/__LISTEN_PORT__/${LISTEN_PORT}/g" \
-    -e "s/__DO_IPV4__/${DO_IPV4}/g" \
-    -e "s/__DO_IPV6__/${DO_IPV6}/g" \
-    -e "s/__ACCESS_CONTROL_ALLOW__/${ACCESS_CONTROL_ALLOW}/g" \
-    -e "s/__ACCESS_CONTROL_ALLOW_IPV6__/${ACCESS_CONTROL_ALLOW_IPV6}/g" \
-    -e "s/__CACHE_MIN_TTL__/${CACHE_MIN_TTL}/g" \
-    -e "s/__CACHE_MAX_TTL__/${CACHE_MAX_TTL}/g" \
-    -e "s/__PREFETCH__/${PREFETCH}/g" \
+    -e "s|__LOG_VERBOSITY__|${LOG_VERBOSITY}|g" \
+    -e "s|__NUM_THREADS__|${NUM_THREADS}|g" \
+    -e "s|__LISTEN_PORT__|${LISTEN_PORT}|g" \
+    -e "s|__DO_IPV4__|${DO_IPV4}|g" \
+    -e "s|__DO_IPV6__|${DO_IPV6}|g" \
+    -e "s|__ACCESS_CONTROL_ALLOW__|${ACCESS_CONTROL_ALLOW}|g" \
+    -e "s|__ACCESS_CONTROL_ALLOW_IPV6__|${ACCESS_CONTROL_ALLOW_IPV6}|g" \
+    -e "s|__CACHE_MIN_TTL__|${CACHE_MIN_TTL}|g" \
+    -e "s|__CACHE_MAX_TTL__|${CACHE_MAX_TTL}|g" \
+    -e "s|__PREFETCH__|${PREFETCH}|g" \
     "${TMPL_FILE}" > "${CONF_FILE}"
 
 # Append DNSSEC anchor line only when enabled

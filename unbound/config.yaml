@@ -14,8 +14,8 @@ arch:
   - armhf
   - i386
 ports:
-  5335/tcp: null
-  5335/udp: null
+  5335/tcp: 5335
+  5335/udp: 5335
 ports_description:
   5335/tcp: DNS over TCP
   5335/udp: DNS over UDP
