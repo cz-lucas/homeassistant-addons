@@ -37,14 +37,13 @@ server:
     hide-identity: yes
     hide-version: yes
 
-    # Minimise QNAME (privacy)
-    qname-minimisation: yes
+    qname-minimisation: no
 
     # Harden against DNSSEC stripped answers and cache snooping
     harden-glue: yes
     harden-dnssec-stripped: yes
     harden-below-nxdomain: yes
-    harden-referral-path: yes
+    harden-referral-path: no
 
     # Use 0x20 encoding to reduce spoofing risk
     use-caps-for-id: yes
@@ -55,3 +54,6 @@ server:
 
     # Custom local records placeholder
     # __CUSTOM_RECORDS__
+
+remote-control:
+    control-enable: yes

@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.1
+- Changed config
+
 ## 1.0.0
 
 - Initial release
