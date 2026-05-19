@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.2
+- Disabled remote control due to missing certificates
+
 ## 1.0.1
 - Changed config
 
