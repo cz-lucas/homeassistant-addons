@@ -1,0 +1,6 @@
+---
+build_from:
+  amd64: prom/prometheus:main
+  aarch64: prom/prometheus:main
+labels:
+  - io.hass.type=addon
