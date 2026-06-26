@@ -1,18 +1,18 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
-# Get options from Home Assistant
-LOG_LEVEL=$(jq -r '.log_level // "info"' /data/options.json)
-RETENTION_DAYS=$(jq -r '.retention_days // 15' /data/options.json)
-EVALUATION_INTERVAL=$(jq -r '.evaluation_interval // "15s"' /data/options.json)
-SCRAPE_INTERVAL=$(jq -r '.scrape_interval // "15s"' /data/options.json)
+OPTIONS_FILE="/data/options.json"
+CONFIG_DIR="/share/prometheus"
+CONFIG_FILE="${CONFIG_DIR}/prometheus.yml"
+DATA_DIR="${CONFIG_DIR}/data"
 
-# Create share directory if it doesn't exist
-mkdir -p /share/prometheus
+LOG_LEVEL=$(jq -r '.log_level // "info"' "${OPTIONS_FILE}")
+RETENTION_DAYS=$(jq -r '.retention_days // 15' "${OPTIONS_FILE}")
 
-# Generate default prometheus.yml in share if it doesn't exist
-if [ ! -f /share/prometheus/prometheus.yml ]; then
-    cat > /share/prometheus/prometheus.yml <<'EOF'
+mkdir -p "${CONFIG_DIR}" "${DATA_DIR}"
+
+if [ ! -f "${CONFIG_FILE}" ]; then
+  cat > "${CONFIG_FILE}" <<'EOF'
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
@@ -24,30 +24,18 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 EOF
-    echo "[Info] Created default prometheus.yml in /share/prometheus/"
+  echo "[Info] Created default Prometheus config at ${CONFIG_FILE}"
 fi
 
-# Create symlink to share config (data directory for prometheus)
-mkdir -p /prometheus
-ln -sf /share/prometheus /prometheus/config
+chown -R nobody:nogroup "${CONFIG_DIR}" || true
 
-# Ensure prometheus data directory exists
-mkdir -p /share/prometheus/data
-
-# Set permissions
-chown -R nobody:nogroup /share/prometheus
-
-# Log startup
 echo "[Info] Starting Prometheus..."
 echo "[Info] Log Level: ${LOG_LEVEL}"
 echo "[Info] Retention: ${RETENTION_DAYS} days"
-echo "[Info] Evaluation Interval: ${EVALUATION_INTERVAL}"
-echo "[Info] Scrape Interval: ${SCRAPE_INTERVAL}"
-echo "[Info] Config: /share/prometheus/prometheus.yml"
+echo "[Info] Config: ${CONFIG_FILE}"
 
-# Start Prometheus with options
 exec prometheus \
-  --config.file=/share/prometheus/prometheus.yml \
-  --storage.tsdb.path=/share/prometheus/data \
-  --storage.tsdb.retention.time=${RETENTION_DAYS}d \
-  --log.level=${LOG_LEVEL}
+  --config.file="${CONFIG_FILE}" \
+  --storage.tsdb.path="${DATA_DIR}" \
+  --storage.tsdb.retention.time="${RETENTION_DAYS}d" \
+  --log.level="${LOG_LEVEL}"

@@ -1,6 +1,6 @@
 ---
 name: Prometheus
-version: "1.0.0"
+version: "1.0.1"
 slug: prometheus
 description: Prometheus monitoring and alerting system for Home Assistant
 url: https://github.com/cz-lucas/homeassistant-addons
@@ -13,14 +13,10 @@ ports:
 ports_description:
   9090/tcp: Prometheus HTTP API
 map:
-  - share/prometheus:rw
+  - share:rw
 options:
   log_level: info
   retention_days: 15
-  evaluation_interval: 15s
-  scrape_interval: 15s
 schema:
   log_level: list(debug|info|warn|error)
   retention_days: int
-  evaluation_interval: str
-  scrape_interval: str
