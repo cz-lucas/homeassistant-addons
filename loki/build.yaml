@@ -1,0 +1,4 @@
+---
+build_from:
+  amd64: grafana/loki:latest
+  aarch64: grafana/loki:latest

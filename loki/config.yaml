@@ -1,0 +1,16 @@
+---
+name: Loki
+version: "1.0.0"
+slug: loki
+description: Horizontally scalable, highly available, multi-tenant log aggregation system.
+url: https://github.com/cz-lucas/homeassistant-addons
+init: false
+arch:
+  - amd64
+  - aarch64
+ports:
+  3100/tcp: null
+ports_description:
+  3100/tcp: Loki HTTP API
+options: {}
+schema: {}
