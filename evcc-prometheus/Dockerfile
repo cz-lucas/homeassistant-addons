@@ -1,4 +1,4 @@
-FROM ghcr.io/cz-lucas/evcc-prometheus:1.0.0
+FROM ghcr.io/cz-lucas/evcc-prometheus:1.1.0
 
 USER root
 RUN apk add --no-cache curl jq

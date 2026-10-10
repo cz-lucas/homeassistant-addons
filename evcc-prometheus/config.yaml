@@ -1,5 +1,5 @@
 name: EVCC Prometheus
-version: "1.0.0"
+version: "1.1.0"
 slug: evcc_prometheus
 description: Export EVCC data as Prometheus metrics
 url: https://github.com/cz-lucas/evcc-prometheus
