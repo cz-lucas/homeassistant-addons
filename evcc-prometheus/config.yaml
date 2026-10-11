@@ -1,0 +1,25 @@
+name: EVCC Prometheus
+version: "1.2.0"
+slug: evcc_prometheus
+description: Export EVCC data as Prometheus metrics
+url: https://github.com/cz-lucas/evcc-prometheus
+arch:
+  - amd64
+  - aarch64
+startup: application
+boot: auto
+init: false
+hassio_api: true
+ports:
+  9070/tcp: null
+ports_description:
+  9070/tcp: Prometheus metrics and health endpoint
+watchdog: http://[HOST]:[PORT:9070]/health
+options:
+  evcc_ws_url: ws://49686a9f-evcc:7070/ws
+  log_level: info
+  go_metrics_enabled: false
+schema:
+  evcc_ws_url: str
+  log_level: list(debug|info|warn|error)
+  go_metrics_enabled: bool
