@@ -1,0 +1,11 @@
+configuration:
+  evcc_ws_url:
+    name: EVCC WebSocket URL
+    description: WebSocket URL of your EVCC instance, such as ws://evcc.internal:7070/ws.
+  log_level:
+    name: Log level
+  go_metrics_enabled:
+    name: Go runtime metrics
+    description: Include Go runtime and process metrics in /metrics.
+network:
+  9070/TCP: Prometheus metrics and health endpoint
