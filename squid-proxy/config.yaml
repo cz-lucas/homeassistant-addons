@@ -1,0 +1,20 @@
+---
+name: Squid Proxy
+version: "1.0.0"
+slug: squid_proxy
+description: Squid caching proxy server with IPv4 and IPv6 support.
+url: https://github.com/cz-lucas/homeassistant-addons
+init: false
+arch:
+  - amd64
+  - aarch64
+  - armhf
+  - armv7
+  - i386
+host_network: true
+map:
+  - share:rw
+options:
+  config_path: /share/squid/squid.conf
+schema:
+  config_path: str
